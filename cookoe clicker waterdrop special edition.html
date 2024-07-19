@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>水滴 Clicker Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #cookie-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: inline-block;
+      cursor: pointer;
+    }
+    #cookie-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #score {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    #shop {
+      margin-top: 20px;
+    }
+    .item {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>水滴 Clicker</h1>
+  <p>Click the Trisolaran space probe to earn points!</p>
+  <div id="cookie-container">
+    <img src=".\1671399617.jpg" alt="Cookie"> <!-- Ensure this path is correct -->
+  </div>
+  <p>Points: <span id="score">0</span></p>
+
+  <div id="shop">
+    <div class="item" id="upgrade1">
+      Upgrade 1 (Cost: <span id="upgrade1-cost">10</span> points) +1 point per click
+    </div>
+    <div class="item" id="auto-clicker">
+      Auto-Clicker (Cost: 50 points) +1 point per second
+    </div>
+  </div>
+
+  <script>
+    let score = 0;
+    let pointsPerClick = 1;
+    let pointsPerSecond = 1;
+    let upgrade1Cost = 10;
+    const cookieContainer = document.getElementById('cookie-container');
+    const scoreDisplay = document.getElementById('score');
+    const upgrade1 = document.getElementById('upgrade1');
+    const autoClicker = document.getElementById('auto-clicker');
+
+    function updateScore() {
+      scoreDisplay.textContent = score;
+    }
+
+    cookieContainer.addEventListener('click', () => {
+      score += pointsPerClick;
+      updateScore();
+    });
+
+    upgrade1.addEventListener('click', () => {
+      if (score >= upgrade1Cost) {
+        score -= upgrade1Cost;
+        pointsPerClick += 1;
+        upgrade1Cost += 10;
+        updateScore();
+        document.getElementById('upgrade1-cost').textContent = upgrade1Cost;
+      } else {
+        alert('Not enough points for this upgrade!');
+      }
+    });
+
+    autoClicker.addEventListener('click', () => {
+      if (score >= 50) {
+        score -= 50;
+        pointsPerSecond += 1;
+        updateScore();
+      } else {
+        alert('Not enough points for this auto-clicker!');
+      }
+    });
+
+    setInterval(() => {
+      score += pointsPerSecond;
+      updateScore();
+    }, 1000); // Increase score every second
+  </script>
+</body>
+</html>
